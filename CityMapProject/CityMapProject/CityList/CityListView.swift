@@ -25,7 +25,7 @@ struct CityListView<ViewModel>: View where ViewModel: CityListViewModeling {
                 case .error:
                     EmptyView()
                 case .loading:
-                    EmptyView()
+                    LoaderView()
                 }
             }
             .navigationDestination(for: CityModel.self) { city in
@@ -35,18 +35,28 @@ struct CityListView<ViewModel>: View where ViewModel: CityListViewModeling {
     }
     
     private var successView: some View {
-        List(viewModel.cities) { city in
-            CityCell(
-                city: city,
-                onTapCell: { navigationPath.append(city) },
-                onCheckFavorite: { favorite in
-                    self.viewModel.updateFavorite(for: city, setValue: favorite)
-                }).padding()
-                .onAppear {
-                    if (city.id == viewModel.cities.last?.id) && (viewModel.hasMoreCitiesToLoad) {
-                        viewModel.loadMoreCities()
+        VStack{
+            TextField(String.searchCity, text: $viewModel.searchText)
+                .padding()
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .keyboardType(.alphabet)
+            List(viewModel.cities) { city in
+                CityCell(
+                    city: city,
+                    onTapCell: { navigationPath.append(city) },
+                    onCheckFavorite: { favorite in
+                        self.viewModel.updateFavorite(for: city, setValue: favorite)
+                    }).padding()
+                    .onAppear {
+                        if (city.id == viewModel.cities.last?.id) && (viewModel.hasMoreCitiesToLoad) {
+                            viewModel.loadMoreCities()
+                        }
                     }
-                }
+            }
         }
     }
+}
+
+private extension String {
+    static let searchCity = "Buscar ciudad"
 }
