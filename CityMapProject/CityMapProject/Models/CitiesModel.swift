@@ -14,6 +14,7 @@ final class CityModel: Codable, Identifiable, ObservableObject, Hashable {
     var id: Int
     var coord: Coordinate
     @Published var isFavorite: Bool = false
+    var description: String { "Lat: \(coord.lat), Lon:\(coord.lon)"}
     
     enum CodingKeys: String, CodingKey {
         case country, name

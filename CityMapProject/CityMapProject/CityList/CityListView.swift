@@ -36,17 +36,17 @@ struct CityListView<ViewModel>: View where ViewModel: CityListViewModeling {
     
     private var successView: some View {
         List(viewModel.cities) { city in
-            CityCell(city: city,
-                     onTapCell: {
-                navigationPath.append(city)
-            }, onCheckFavorite: { favorite in
-                self.viewModel.updateFavorite(for: city, setValue: favorite)
-            })
-            .onAppear {
-                if (city.id == viewModel.cities.last?.id) && (viewModel.hasMoreCitiesToLoad) {
-                    viewModel.loadMoreCities()
+            CityCell(
+                city: city,
+                onTapCell: { navigationPath.append(city) },
+                onCheckFavorite: { favorite in
+                    self.viewModel.updateFavorite(for: city, setValue: favorite)
+                }).padding()
+                .onAppear {
+                    if (city.id == viewModel.cities.last?.id) && (viewModel.hasMoreCitiesToLoad) {
+                        viewModel.loadMoreCities()
+                    }
                 }
-            }
         }
     }
 }
