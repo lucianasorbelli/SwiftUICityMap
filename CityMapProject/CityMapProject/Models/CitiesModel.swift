@@ -9,7 +9,7 @@ import Foundation
 
 typealias CitiesModel = [CityModel]
 
-class CityModel: Codable, Identifiable, ObservableObject, Hashable {
+final class CityModel: Codable, Identifiable, ObservableObject, Hashable {
     var country, name: String
     var id: Int
     var coord: Coordinate

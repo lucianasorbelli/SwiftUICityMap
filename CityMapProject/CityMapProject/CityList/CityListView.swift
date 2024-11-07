@@ -29,7 +29,7 @@ struct CityListView<ViewModel>: View where ViewModel: CityListViewModeling {
                 }
             }
             .navigationDestination(for: CityModel.self) { city in
-                //navigate to mapView with city
+                CityMapView(viewModel: viewModel.getMapViewModel(for: city))
             }
         }
     }
