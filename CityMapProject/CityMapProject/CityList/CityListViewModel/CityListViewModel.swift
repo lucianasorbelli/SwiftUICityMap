@@ -14,6 +14,7 @@ protocol CityListViewModeling: ObservableObject {
     ///functions
     func fetchCities()
     func loadMoreCities()
+    func updateFavorite(for city: CityModel, setValue: Bool)
     func getMapViewModel(for city: CityModel) -> CityMapViewModel
 }
 
@@ -27,10 +28,13 @@ final class CityListViewModel: CityListViewModeling {
     @Published var cities: CitiesModel = []
     @Published var hasMoreCitiesToLoad = true
     @Published var viewState: ViewState = .loading
+    private let storageHandler: FavouriteCitiesStorageProtocol
     private let repository: CityListRepositoryProtocol
     
-    init(repository: CityListRepositoryProtocol = CityListRepository()){
+    init(repository: CityListRepositoryProtocol = CityListRepository(),
+         storageHandler: FavouriteCitiesStorageProtocol = FavouriteCitiesStorage()){
         self.repository = repository
+        self.storageHandler = storageHandler
         self.fetchCities()
     }
     
@@ -45,6 +49,7 @@ final class CityListViewModel: CityListViewModeling {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     self.allCities = sortedCities
+                    checkFavoritesCities()
                     self.loadMoreCities()
                     self.viewState = .success
                 }
@@ -85,5 +90,17 @@ final class CityListViewModel: CityListViewModeling {
             }
             return $0.country.lowercased() < $1.country.lowercased()
         }
+    }
+    
+    private func checkFavoritesCities() {
+        let favoriteCityIDs = UserDefaults.standard.array(forKey: "favouriteCities") as? [Int] ?? []
+        allCities.filter { favoriteCityIDs.contains($0.id) }.forEach { city in
+            city.isFavorite = true
+        }
+    }
+    
+    func updateFavorite(for city: CityModel, setValue: Bool) {
+        setValue ? storageHandler.saveFavouriteCity(id: city.id) : storageHandler.removeFavouriteCity(id: city.id)
+        city.isFavorite = storageHandler.isFavouriteCity(id: city.id)
     }
 }
