@@ -10,11 +10,15 @@ import SwiftUI
 
 struct CityCell: View {
     @ObservedObject var city: CityModel
-    private var action: () -> Void
+    private var onTapCell: () -> Void
+    private var onCheckFavorite: (Bool) -> Void
     
-    init(city: CityModel, action: @escaping () -> Void) {
+    init(city: CityModel,
+         onTapCell: @escaping () -> Void,
+         onCheckFavorite: @escaping (Bool) -> Void) {
         self.city = city
-        self.action = action
+        self.onTapCell = onTapCell
+        self.onCheckFavorite = onCheckFavorite
     }
     
     var body: some View {
@@ -26,12 +30,12 @@ struct CityCell: View {
                     .font(.subheadline)
             }
             Spacer()
-            Button(action: { action() }) {
+            Button(action: { onTapCell() }) {
                 Image(systemName: city.isFavorite ? "heart.fill" : "heart")
                     .foregroundColor(city.isFavorite ? .red : .gray)
                     .font(.system(size: 24))
                     .onTapGesture {
-                        city.isFavorite.toggle()
+                        onCheckFavorite(!city.isFavorite)
                     }
             }
             .frame(width: 24.0, height: 24.0)
