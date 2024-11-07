@@ -9,7 +9,9 @@ import Foundation
 
 protocol CityListViewModeling: ObservableObject {
     var cities: CitiesModel { get }
+    var searchText: String { get set }
     var hasMoreCitiesToLoad: Bool { get }
+    var filteredCities: CitiesModel { get }
     var viewState: CityListViewModel.ViewState { get }
     ///functions
     func fetchCities()
@@ -24,10 +26,16 @@ final class CityListViewModel: CityListViewModeling {
     
     private let pageSize = 50
     private var currentPage = 0
+    @Published var searchText: String = "" {
+        didSet {
+            filterCities()
+        }
+    }
     private var allCities: CitiesModel = []
     @Published var cities: CitiesModel = []
     @Published var hasMoreCitiesToLoad = true
     @Published var viewState: ViewState = .loading
+    @Published var filteredCities: CitiesModel = []
     private let storageHandler: FavouriteCitiesStorageProtocol
     private let repository: CityListRepositoryProtocol
     
@@ -62,6 +70,9 @@ final class CityListViewModel: CityListViewModeling {
     }
     
     func loadMoreCities() {
+        
+        guard searchText.isEmpty else { return }
+        
         let start = currentPage * pageSize
         let end = min(start + pageSize, allCities.count)
         
@@ -71,6 +82,8 @@ final class CityListViewModel: CityListViewModeling {
         }
         
         cities.append(contentsOf: allCities[start..<end])
+        cities = cities.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
+        
         currentPage += 1
         
         if cities.count >= allCities.count {
@@ -89,6 +102,25 @@ final class CityListViewModel: CityListViewModeling {
                 return $0.name.lowercased() < $1.name.lowercased()
             }
             return $0.country.lowercased() < $1.country.lowercased()
+        }
+    }
+    
+    private func filterCities() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            let currentPageCities = allCities.prefix(self.currentPage * self.pageSize)
+            
+            let filteredCities: CitiesModel
+            if self.searchText.count < 2 {
+                filteredCities = Array(currentPageCities)
+            } else {
+                filteredCities = allCities.filter { city in
+                    city.name.lowercased().hasPrefix(self.searchText.lowercased())
+                }
+            }
+            DispatchQueue.main.async {
+                self.cities = filteredCities
+            }
         }
     }
     
