@@ -11,7 +11,8 @@ import SwiftUI
 struct CityMapProjectApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let viewModel = CityListViewModel()
+            CityListView(viewModel: viewModel)
         }
     }
 }
