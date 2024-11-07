@@ -399,6 +399,8 @@
 				DEVELOPMENT_TEAM = 8K497DN78P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "$(PRODUCT_BUNDLE_IDENTIFIER) requires permissions";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "$(PRODUCT_BUNDLE_IDENTIFIER) requires permissions";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -428,6 +430,8 @@
 				DEVELOPMENT_TEAM = 8K497DN78P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "$(PRODUCT_BUNDLE_IDENTIFIER) requires permissions";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "$(PRODUCT_BUNDLE_IDENTIFIER) requires permissions";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

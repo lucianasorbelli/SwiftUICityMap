@@ -17,34 +17,19 @@ struct CityMapView<ViewModel>: View where ViewModel: CityMapViewModeling {
     }
     
     var body: some View {
-        switch viewModel.viewState {
-        case .ready:
-            Map(interactionModes: [.pan, .zoom]){
-                
-                Annotation("Coffee Shop", coordinate: viewModel.city.coordinate) {
-                    Circle()
-                        .fill(Color.accentColor)
-                        .frame(width: 30, height: 30)
-                        .overlay {
-                            Image(systemName: "mappin.circle")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        }
-              
-                    //Marker(viewModel.city.name, coordinate: viewModel.city.coordinate)
-                }
-                //
-            }.mapStyle(.standard(elevation: .realistic, pointsOfInterest: .including([.cafe])))
-        case .inProgress:
-            EmptyView()
-        }
-        
-        
-        //        Map((initialPosition: .region(MKCoordinateRegion(center: viewModel.city.coordinate, span: (MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)))))) {
-        //
-        //        }
-        
-        
+        Map(interactionModes: [.pan, .zoom]){
+            Annotation(viewModel.city.name,
+                       coordinate: viewModel.city.coordinate) {
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 50, height: 30)
+                    .overlay {
+                        Image(systemName: "mappin.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+            }
+        }.mapStyle(.standard(elevation: .realistic, pointsOfInterest: .including([.cafe])))
     }
 }
-    
+

@@ -10,17 +10,13 @@ import MapKit
 
 protocol CityMapViewModeling: ObservableObject {
     var city: MapLocation { get }
-    var viewState: CityMapViewModel.ViewState { get }
 }
 
 final class CityMapViewModel: CityMapViewModeling {
-    enum ViewState { case ready, inProgress }
     @Published var city: MapLocation
-    @Published var viewState: ViewState = .inProgress
     
     init(city: MapLocation) {
         self.city = city
-        viewState = .ready
     }
 }
 
@@ -30,10 +26,9 @@ struct MapLocation: Identifiable {
     let latitude: Double
     let longitude: Double
     var coordinate: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(latitude: -78.49, longitude: -9.12)
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     var region: MKCoordinateRegion {
-        MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
+        MKCoordinateRegion(center: coordinate, latitudinalMeters: 6500, longitudinalMeters: 6500)
     }
 }
-//-78.497498,"lat":-9.12417
