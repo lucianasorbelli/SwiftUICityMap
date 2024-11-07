@@ -23,7 +23,7 @@ struct CityListView<ViewModel>: View where ViewModel: CityListViewModeling {
                 case .success:
                     successView
                 case .error:
-                    EmptyView()
+                    ErrorScreenView(retryAction: viewModel.fetchCities)
                 case .loading:
                     LoaderView()
                 }
