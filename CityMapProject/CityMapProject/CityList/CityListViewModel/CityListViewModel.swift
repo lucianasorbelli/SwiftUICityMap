@@ -123,8 +123,6 @@ final class CityListViewModel: CityListViewModeling {
         }
     }
     
-    
-    
     private func checkFavoritesCities() {
         let favoriteCityIDs = UserDefaults.standard.array(forKey: "favouriteCities") as? [Int] ?? []
         allCities.filter { favoriteCityIDs.contains($0.id) }.forEach { city in

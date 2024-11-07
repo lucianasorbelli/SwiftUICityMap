@@ -43,6 +43,6 @@ struct CityMapView<ViewModel>: View where ViewModel: CityMapViewModeling {
                         .presentationCompactAdaptation(.popover)
                     })
             }
-        }.mapStyle(.standard(elevation: .realistic, pointsOfInterest: .including([.cafe])))
+        }.mapStyle(.standard(elevation: .realistic, pointsOfInterest: .including([.cafe, .airport, .museum, .bakery, .bank, .aquarium, .park, .parking, .beauty, .beach, .automotiveRepair ])))
     }
 }

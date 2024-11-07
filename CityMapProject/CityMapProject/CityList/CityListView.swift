@@ -25,7 +25,7 @@ struct CityListView<ViewModel>: View where ViewModel: CityListViewModeling {
                 case .error:
                     EmptyView()
                 case .loading:
-                    EmptyView()
+                    LoaderView()
                 }
             }
             .navigationDestination(for: CityModel.self) { city in
@@ -39,6 +39,7 @@ struct CityListView<ViewModel>: View where ViewModel: CityListViewModeling {
             TextField(String.searchCity, text: $viewModel.searchText)
                 .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .keyboardType(.alphabet)
             List(viewModel.cities) { city in
                 CityCell(
                     city: city,
