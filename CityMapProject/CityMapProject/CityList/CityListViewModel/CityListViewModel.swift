@@ -14,9 +14,11 @@ protocol CityListViewModeling: ObservableObject {
     ///functions
     func fetchCities()
     func loadMoreCities()
+    func getMapViewModel(for city: CityModel) -> CityMapViewModel
 }
 
 final class CityListViewModel: CityListViewModeling {
+    
     enum ViewState { case success, error, loading }
     
     private let pageSize = 50
@@ -69,6 +71,11 @@ final class CityListViewModel: CityListViewModeling {
         if cities.count >= allCities.count {
             hasMoreCitiesToLoad = false
         }
+    }
+    
+    func getMapViewModel(for city: CityModel) -> CityMapViewModel {
+        let mapLocation = MapLocation(name: city.name, latitude: city.coord.lat, longitude: city.coord.lon)
+        return CityMapViewModel(city: mapLocation)
     }
     
     private func sort(_ cities: CitiesModel) -> CitiesModel {

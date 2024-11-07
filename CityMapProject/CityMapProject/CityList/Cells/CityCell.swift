@@ -8,9 +8,6 @@
 import Combine
 import SwiftUI
 
-import Combine
-import SwiftUI
-
 struct CityCell: View {
     @ObservedObject var city: CityModel
     private var action: () -> Void
