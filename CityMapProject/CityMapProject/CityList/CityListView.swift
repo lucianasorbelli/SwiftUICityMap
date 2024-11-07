@@ -28,7 +28,6 @@ struct CityListView<ViewModel>: View where ViewModel: CityListViewModeling {
                     EmptyView()
                 }
             }
-            .onAppear(perform: viewModel.fetchCities)
             .navigationDestination(for: CityModel.self) { city in
                 //navigate to mapView with city
             }
