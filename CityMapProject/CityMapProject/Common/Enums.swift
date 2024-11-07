@@ -15,3 +15,5 @@ enum NetworkingError: Error {
     case invalidResponse(error: Error)
     case statusCode(Int)
 }
+
+enum ViewState { case success, error, loading }
