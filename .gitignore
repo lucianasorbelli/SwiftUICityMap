@@ -1,0 +1,48 @@
+# Xcode
+*.xcworkspace
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+DerivedData/
+*.hmap
+
+# Project-specific
+CityMapProject/CityMapProject.xcodeproj/project.xcworkspace/xcuserdata/
+CityMapProject/CityMapProject.xcodeproj/xcuserdata/
+CityMapProject/CityMapProject/Preview\ Content/
+CityMapProject/CityMapProject/Assets.xcassets/Contents.json
+
+# Swift Package Manager
+/.build/
+.swiftpm/
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Other
+*.ipa
+*.dSYM.zip
+*.dSYM
+*.xcarchive
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Build artifacts
+build/
+
