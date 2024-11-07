@@ -10,13 +10,23 @@ import MapKit
 
 protocol CityMapViewModeling: ObservableObject {
     var city: MapLocation { get }
+    var description: String { get }
+    var showInfo: Bool { get set }
 }
 
 final class CityMapViewModel: CityMapViewModeling {
+    
     @Published var city: MapLocation
+    @Published var showInfo: Bool = false
+    @Published var description: String = String()
     
     init(city: MapLocation) {
         self.city = city
+        setupDescription()
+    }
+    
+    private func setupDescription() {
+        description = "Lat: \(city.latitude)\nLong: \(city.longitude)"
     }
 }
 

@@ -11,6 +11,7 @@ import MapKit
 struct CityMapView<ViewModel>: View where ViewModel: CityMapViewModeling {
     
     @StateObject private var viewModel: ViewModel
+    @Environment(\.horizontalSizeClass) var sizeClass
     
     init(viewModel: @autoclosure @escaping () -> ViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel())
@@ -27,9 +28,21 @@ struct CityMapView<ViewModel>: View where ViewModel: CityMapViewModeling {
                         Image(systemName: "mappin.circle")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                    }.onTapGesture {
+                        viewModel.showInfo.toggle()
                     }
+                    .popover(isPresented: $viewModel.showInfo, content: {
+                        VStack{
+                            Text(viewModel.city.name)
+                                .font(.headline.weight(.semibold))
+                                .foregroundStyle(Color.red)
+                            Text(viewModel.description)
+                                .font(.subheadline.weight(.medium))
+                        }
+                        .padding()
+                        .presentationCompactAdaptation(.popover)
+                    })
             }
         }.mapStyle(.standard(elevation: .realistic, pointsOfInterest: .including([.cafe])))
     }
 }
-
