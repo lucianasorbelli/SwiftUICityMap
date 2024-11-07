@@ -36,10 +36,7 @@ struct CityListView<ViewModel>: View where ViewModel: CityListViewModeling {
     
     private var successView: some View {
         VStack{
-            TextField(String.searchCity, text: $viewModel.searchText)
-                .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .keyboardType(.alphabet)
+            cityTextField
             List(viewModel.cities) { city in
                 CityCell(
                     city: city,
@@ -55,8 +52,28 @@ struct CityListView<ViewModel>: View where ViewModel: CityListViewModeling {
             }
         }
     }
+    
+    private var cityTextField: some View {
+        TextField(String.searchCity, text: $viewModel.searchText)
+            .padding()
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .keyboardType(.alphabet)
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button(String.done) {
+                        hideKeyboard()
+                    }
+                }
+            }
+    }
+    
+    private func hideKeyboard() {
+        UIApplication.shared.endEditing(true)
+    }
 }
 
 private extension String {
+    static let done = "Done"
     static let searchCity = "Buscar ciudad"
 }
