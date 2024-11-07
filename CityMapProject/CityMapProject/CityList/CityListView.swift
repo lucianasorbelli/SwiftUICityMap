@@ -10,35 +10,36 @@ import SwiftUI
 struct CityListView<ViewModel>: View where ViewModel: CityListViewModeling {
     
     @StateObject private var viewModel: ViewModel
+    @State private var navigationPath = NavigationPath()
     
     init(viewModel: @autoclosure @escaping () -> ViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel())
     }
     
     var body: some View {
-        VStack{
-            switch viewModel.viewState {
-            case .success:
-                successView
-            case .error:
-                EmptyView()
-            case .loading:
-                EmptyView()
+        NavigationStack(path: $navigationPath) {
+            VStack{
+                switch viewModel.viewState {
+                case .success:
+                    successView
+                case .error:
+                    EmptyView()
+                case .loading:
+                    EmptyView()
+                }
+            }
+            .onAppear(perform: viewModel.fetchCities)
+            .navigationDestination(for: CityModel.self) { city in
+                //navigate to mapView with city
             }
         }
-        .onAppear(perform: viewModel.fetchCities)
     }
     
     private var successView: some View {
         List(viewModel.cities) { city in
-            VStack(alignment: .leading) {
-                Text(city.name)
-                    .font(.headline)
-                Text(city.country)
-                    .font(.subheadline)
-            }
-            .padding()
-            .onAppear {
+            CityCell(city: city, action: {
+                navigationPath.append(city)
+            }).onAppear {
                 if (city.id == viewModel.cities.last?.id) && (viewModel.hasMoreCitiesToLoad) {
                     viewModel.loadMoreCities()
                 }

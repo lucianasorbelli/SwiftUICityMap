@@ -9,17 +9,32 @@ import Foundation
 
 typealias CitiesModel = [CityModel]
 
-struct CityModel: Codable, Identifiable {
-    let country,
-        name: String
-    let id: Int
-    let coord: Coordinate
+class CityModel: Codable, Identifiable, ObservableObject, Hashable {
+    var country, name: String
+    var id: Int
+    var coord: Coordinate
+    @Published var isFavorite: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case country, name
         case id = "_id"
         case coord
     }
+    
+    init(country: String,
+         name: String,
+         id: Int,
+         coord: Coordinate,
+         isFavorite: Bool = false) {
+        self.country = country
+        self.name = name
+        self.id = id
+        self.coord = coord
+        self.isFavorite = isFavorite
+    }
+    
+    public func hash(into hasher: inout Hasher) { hasher.combine(id) }
+    public static func == (lhs: CityModel, rhs: CityModel) -> Bool { lhs.id == rhs.id }
 }
 
 struct Coordinate: Codable {
