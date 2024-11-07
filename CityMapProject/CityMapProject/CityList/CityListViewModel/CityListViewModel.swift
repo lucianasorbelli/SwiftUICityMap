@@ -11,7 +11,6 @@ protocol CityListViewModeling: ObservableObject {
     var cities: CitiesModel { get }
     var searchText: String { get set }
     var hasMoreCitiesToLoad: Bool { get }
-    var filteredCities: CitiesModel { get }
     var viewState: CityListViewModel.ViewState { get }
     ///functions
     func fetchCities()
@@ -35,7 +34,7 @@ final class CityListViewModel: CityListViewModeling {
     @Published var cities: CitiesModel = []
     @Published var hasMoreCitiesToLoad = true
     @Published var viewState: ViewState = .loading
-    @Published var filteredCities: CitiesModel = []
+    var filteredCities: CitiesModel = []
     private let storageHandler: FavouriteCitiesStorageProtocol
     private let repository: CityListRepositoryProtocol
     
@@ -123,6 +122,8 @@ final class CityListViewModel: CityListViewModeling {
             }
         }
     }
+    
+    
     
     private func checkFavoritesCities() {
         let favoriteCityIDs = UserDefaults.standard.array(forKey: "favouriteCities") as? [Int] ?? []

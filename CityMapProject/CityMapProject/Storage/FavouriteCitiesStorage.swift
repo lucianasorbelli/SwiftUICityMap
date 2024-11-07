@@ -28,10 +28,10 @@ final class FavouriteCitiesStorage: FavouriteCitiesStorageProtocol {
     }
     
     func isFavouriteCity(id: Int) -> Bool {
-        return getAllFavouriteCities().contains(id)
+        getAllFavouriteCities().contains(id)
     }
     
     func getAllFavouriteCities() -> [Int] {
-        return UserDefaults.standard.array(forKey: favouritesKey) as? [Int] ?? []
+        UserDefaults.standard.array(forKey: favouritesKey) as? [Int] ?? []
     }
 }
