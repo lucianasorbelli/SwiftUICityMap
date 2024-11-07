@@ -29,6 +29,7 @@ final class CityListViewModel: CityListViewModeling {
     
     init(repository: CityListRepositoryProtocol = CityListRepository()){
         self.repository = repository
+        self.fetchCities()
     }
     
     func fetchCities() {
