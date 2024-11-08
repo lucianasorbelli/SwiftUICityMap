@@ -1,5 +1,11 @@
 # SwiftUICityMap
 
+<img src="https://github.com/user-attachments/assets/a71b6b14-ce23-4474-a7e8-39876703e38f" width="50%" />
+
+<img src="https://github.com/user-attachments/assets/7af6fed7-1eab-4538-924f-9af1d810f4c7" width="50%" />
+
+<img src="https://github.com/user-attachments/assets/e9132dac-c9a4-4c27-9c02-16ee5f7c043e" width="50%" />
+
 ## Implementation Criteria
 
 The architecture chosen for both features, the city list view and the map view, was based on view models, each with their respective interfaces.
